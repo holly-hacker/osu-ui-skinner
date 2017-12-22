@@ -9,7 +9,7 @@ namespace osu_ui_skinner
         {
             PrintHeader();
             
-            //clueless user ran our program, tell them no to
+            //clueless user ran our program normally, tell them no to
             if (args.Length == 0) {
                 Console.WriteLine("This is a commandline application, but you can simply drag 'n' drop either an osu!ui.dll or extracted folder on me too, and I will work my magic!.");
                 Console.ReadLine();
@@ -18,14 +18,16 @@ namespace osu_ui_skinner
 
             string path = Path.GetFullPath(args[0]);
 
-            if (Directory.Exists(path)) {
-                throw new NotImplementedException("Re-compiling osuui.dll is not yet implemented.");
-            } else if (File.Exists(path)) {
-                OsuUIHelper.Extract(path);
-            }
-            else {
-                Console.WriteLine("Please pass me an existing file or directory as parameter.");
-                return;
+            try {
+                if (Directory.Exists(path))
+                    throw new NotImplementedException("Re-compiling osuui.dll is not yet implemented.");
+                else if (File.Exists(path))
+                    OsuUIHelper.Extract(path);
+                else
+                    Console.WriteLine("Please pass me an existing file or directory as parameter.");
+            } catch (Exception e) {
+                Logger.Error("Unexpected error: " + e.Message);
+                Logger.Debug(e.ToString());
             }
         }
 
@@ -39,7 +41,7 @@ namespace osu_ui_skinner
             const string headerText = "osu!ui skinner" + " " + versionText;
             int len = Math.Max(headerText.Length, 20);
 
-
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("+" + new string('-', len + 2) + "+");
             Console.WriteLine($"| {headerText.PadRight(len)} |");
             Console.WriteLine("+" + new string('-', len + 2) + "+");
