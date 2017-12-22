@@ -4,8 +4,8 @@ namespace osu_ui_skinner.FileFormats
 {
     internal class UnknownResource : ResourceFileBase
     {
-        public override string FileExtension => ".bin";
-        public override string Category => "unknown";
+        public override string FileExtension => string.Empty;
+        public override string Category => "Unknown";
 
         private readonly byte[] _data;
 
