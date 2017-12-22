@@ -28,6 +28,12 @@ namespace osu_ui_skinner
                         return new OpenTypeFontResource(bytes);
                     if (TrueTypeFontResource.Detect(ref bytes))
                         return new TrueTypeFontResource(bytes);
+
+                    //audio files
+                    if (WAVResource.Detect(ref bytes))
+                        return new WAVResource(bytes);
+                    if (MP3Resource.Detect(ref bytes))  //this one last, because it is possibly triggerhappy (start with FFFx/FFEx)
+                        return new MP3Resource(bytes);
                 }
             }
             
