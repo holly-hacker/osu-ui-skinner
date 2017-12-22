@@ -51,6 +51,7 @@
     <Compile Include="FileFormats\BitmapResource.cs" />
     <Compile Include="FileFormats\MP3Resource.cs" />
     <Compile Include="FileFormats\OpenTypeFontResource.cs" />
+    <Compile Include="FileFormats\Osz2Resource.cs" />
     <Compile Include="FileFormats\ShaderResource.cs" />
     <Compile Include="FileFormats\TrueTypeFontResource.cs" />
     <Compile Include="FileFormats\ResourceFileBase.cs" />

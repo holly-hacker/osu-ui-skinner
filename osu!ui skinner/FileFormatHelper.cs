@@ -22,6 +22,8 @@ namespace osu_ui_skinner
                 {
                     if (obj.Name.StartsWith("sh_"))
                         return new ShaderResource(obj.Name, bytes);
+                    if (Osz2Resource.Detect(ref bytes))
+                        return new Osz2Resource(bytes);
 
                     //fonts
                     if (OpenTypeFontResource.Detect(ref bytes))
