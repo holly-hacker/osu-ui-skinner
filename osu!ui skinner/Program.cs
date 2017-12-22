@@ -30,7 +30,14 @@ namespace osu_ui_skinner
             } catch (Exception e) {
                 Logger.Error("Unexpected error: " + e.Message);
                 Logger.Debug(e.ToString());
+                Console.ReadLine();
+                return;
             }
+
+#if DEBUG
+            Console.WriteLine("Press enter to exit");
+            Console.ReadLine();
+#endif
         }
 
         private static void PrintHeader()

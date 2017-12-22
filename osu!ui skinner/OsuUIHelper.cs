@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using dnlib.DotNet;
 using dnlib.DotNet.Resources;
+using osu_ui_skinner.FileFormats;
 
 namespace osu_ui_skinner
 {
@@ -30,9 +30,10 @@ namespace osu_ui_skinner
                 Logger.Debug(element.ToString());
 
                 //save
-                using (BinaryWriter bw = new BinaryWriter(File.OpenWrite(Path.Combine(outputDir, element.Name)))) {
-                    element.ResourceData.WriteData(bw, new BinaryFormatter());
-                }
+                ResourceFileBase b = FileFormatHelper.ToFileFormat(element);
+                string catFolder = Path.Combine(outputDir, b.Category);
+                Directory.CreateDirectory(catFolder);
+                File.WriteAllBytes(Path.Combine(catFolder, element.Name + b.FileExtension), b.GetData());
             }
         }
     }
