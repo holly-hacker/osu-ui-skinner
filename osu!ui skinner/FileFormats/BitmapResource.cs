@@ -14,7 +14,6 @@ namespace osu_ui_skinner.FileFormats
 
         public BitmapResource(byte[] serialized)
         {
-            Logger.Debug("\tCreated " + nameof(BitmapResource));
             _bmp = (Bitmap)new BinaryFormatter().Deserialize(new MemoryStream(serialized, false));
         }
         

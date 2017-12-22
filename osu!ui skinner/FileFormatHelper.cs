@@ -21,7 +21,7 @@ namespace osu_ui_skinner
                 if (bi.Data is byte[] bytes)
                 {
                     if (obj.Name.StartsWith("sh_"))
-                        return new ShaderResource(bytes);
+                        return new ShaderResource(obj.Name, bytes);
 
                     //fonts
                     if (OpenTypeFontResource.Detect(ref bytes))

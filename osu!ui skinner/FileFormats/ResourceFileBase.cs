@@ -5,6 +5,8 @@
         public abstract string Category { get; }
         public abstract string FileExtension { get; }
 
+        public virtual string FileName => null;
+
         public abstract byte[] GetData();
     }
 }

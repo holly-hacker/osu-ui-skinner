@@ -12,7 +12,6 @@ namespace osu_ui_skinner.FileFormats
         public UnknownResource(IResourceData obj) : this(obj.GetDataBytes()) { }
         public UnknownResource(byte[] bytes)
         {
-            Logger.Debug("\tCreated " + nameof(UnknownResource));
             _data = bytes;
         }
 

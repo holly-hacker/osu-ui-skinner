@@ -25,15 +25,16 @@ namespace osu_ui_skinner
             if (res.Count != 1 || !(res[0] is EmbeddedResource r) || r.Name != "osu_ui.ResourcesStore.resources")
                 throw new Exception("Invalid osu!ui.dll");
             
-            Logger.Info("Iterating through resources...");
+            Logger.Info("Saving resources...");
             foreach (var element in ResourceReader.Read(mod, r.Data).ResourceElements) {
                 Logger.Debug(element.ToString());
 
                 //save
                 ResourceFileBase b = FileFormatHelper.ToFileFormat(element);
+                Logger.Debug("\tCreated " + b.GetType().Name);
                 string catFolder = Path.Combine(outputDir, b.Category);
                 Directory.CreateDirectory(catFolder);
-                File.WriteAllBytes(Path.Combine(catFolder, element.Name + b.FileExtension), b.GetData());
+                File.WriteAllBytes(Path.Combine(catFolder, (b.FileName ?? element.Name) + b.FileExtension), b.GetData());
             }
         }
     }
