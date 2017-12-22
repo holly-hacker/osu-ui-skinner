@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using dnlib.DotNet;
 using dnlib.DotNet.Resources;
 
@@ -7,8 +9,11 @@ namespace osu_ui_skinner
 {
     internal static class OsuUIHelper
     {
-        public static void Extract(string fullPath)
+        public static void Extract(string fullPath, string outputDir)
         {
+            Logger.Info($"Creating output directory {outputDir}...");
+            Directory.CreateDirectory(outputDir);
+
             Logger.Info("Loading module...");
             var mod = ModuleDefMD.Load(fullPath);
             var res = mod.Resources;
@@ -23,6 +28,11 @@ namespace osu_ui_skinner
             Logger.Info("Iterating through resources...");
             foreach (var element in ResourceReader.Read(mod, r.Data).ResourceElements) {
                 Logger.Debug(element.ToString());
+
+                //save
+                using (BinaryWriter bw = new BinaryWriter(File.OpenWrite(Path.Combine(outputDir, element.Name)))) {
+                    element.ResourceData.WriteData(bw, new BinaryFormatter());
+                }
             }
         }
     }

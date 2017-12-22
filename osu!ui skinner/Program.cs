@@ -5,6 +5,8 @@ namespace osu_ui_skinner
 {
     internal class Program
     {
+        private const string OutputDir = "extracted";
+
         private static void Main(string[] args)
         {
             PrintHeader();
@@ -22,7 +24,7 @@ namespace osu_ui_skinner
                 if (Directory.Exists(path))
                     throw new NotImplementedException("Re-compiling osuui.dll is not yet implemented.");
                 else if (File.Exists(path))
-                    OsuUIHelper.Extract(path);
+                    OsuUIHelper.Extract(path, OutputDir);
                 else
                     Console.WriteLine("Please pass me an existing file or directory as parameter.");
             } catch (Exception e) {
