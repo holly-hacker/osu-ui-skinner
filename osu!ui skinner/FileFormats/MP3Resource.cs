@@ -19,6 +19,6 @@ namespace osu_ui_skinner.FileFormats
 
         //Starts with ID3 magic
         //ReSharper disable once InconsistentNaming
-        private static bool DetectID3v2(ref byte[] bytes) => bytes.BytesEqual(Encoding.ASCII.GetBytes("ID3"));
+        private static bool DetectID3v2(ref byte[] bytes) => bytes.MatchBytes(Encoding.ASCII.GetBytes("ID3"));
     }
 }

@@ -9,6 +9,6 @@ namespace osu_ui_skinner.FileFormats
 
         public WAVResource(byte[] bytes) : base(bytes) { }
 
-        public static bool Detect(ref byte[] bytes) => bytes.BytesEqual(Encoding.ASCII.GetBytes("RIFF")) || bytes.BytesEqual(Encoding.ASCII.GetBytes("WAVEfmt"));
+        public static bool Detect(ref byte[] bytes) => bytes.MatchBytes(Encoding.ASCII.GetBytes("RIFF")) || bytes.MatchBytes(Encoding.ASCII.GetBytes("WAVEfmt"));
     }
 }

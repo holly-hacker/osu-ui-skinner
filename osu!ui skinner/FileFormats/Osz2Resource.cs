@@ -15,6 +15,6 @@
         //TODO: parse and extract
         public override byte[] GetData() => _data;
 
-        public static bool Detect(ref byte[] bytes) => bytes.BytesEqual(new byte[] {0xEC, 0x48, 0x4F});
+        public static bool Detect(ref byte[] bytes) => bytes.MatchBytes(new byte[] {0xEC, 0x48, 0x4F});
     }
 }
