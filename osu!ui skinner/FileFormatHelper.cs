@@ -30,9 +30,7 @@ namespace osu_ui_skinner
                         return new TrueTypeFontResource(bytes);
                 }
             }
-
-            //byte[] bytes = obj.ResourceData.GetDataBytes();
-
+            
             return new UnknownResource(obj.ResourceData);
         }
 
@@ -41,10 +39,7 @@ namespace osu_ui_skinner
             switch (obj)
             {
                 case BuiltInResourceData d1:
-                    if (d1.Data is byte[] b)
-                        return b;
-                    else
-                        throw new Exception("BuildInResourceData's data is not a byte[]");
+                    return d1.Data as byte[] ?? throw new Exception("BuildInResourceData's data is not a byte[]");
                 case BinaryResourceData d2:
                     return d2.Data;
                 default:

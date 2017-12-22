@@ -7,15 +7,7 @@
 
         public OpenTypeFontResource(byte[] bytes) : base(bytes) { }
 
-        public static bool Detect(ref byte[] bytes)
-        {
-            byte[] magic = {0x4F, 0x54, 0x54, 0x4F, 0x00};
-
-            for (int i = 0; i < magic.Length; i++) {
-                if (bytes[i] != magic[i])
-                    return false;
-            }
-            return true;
-        }
+        //check if the first 5 bytes are equal to the magic
+        public static bool Detect(ref byte[] bytes) => bytes.BytesEqual(new byte[] { 0x4F, 0x54, 0x54, 0x4F, 0x00 });
     }
 }

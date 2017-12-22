@@ -54,6 +54,7 @@
     <Compile Include="FileFormats\TrueTypeFontResource.cs" />
     <Compile Include="FileFormats\ResourceFileBase.cs" />
     <Compile Include="FileFormats\UnknownResource.cs" />
+    <Compile Include="GeneralHelper.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="OsuUIHelper.cs" />
     <Compile Include="Program.cs" />
