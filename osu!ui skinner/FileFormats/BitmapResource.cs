@@ -17,12 +17,6 @@ namespace osu_ui_skinner.FileFormats
             _bmp = (Bitmap)new BinaryFormatter().Deserialize(new MemoryStream(serialized, false));
         }
         
-        public override byte[] GetData()
-        {
-            using (var ms = new MemoryStream()) {
-                _bmp.Save(ms, ImageFormat.Png);
-                return ms.ToArray();
-            }
-        }
+        public override void SaveData(Stream s) => _bmp.Save(s, ImageFormat.Png);
     }
 }

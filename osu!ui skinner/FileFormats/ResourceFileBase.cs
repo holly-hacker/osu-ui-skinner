@@ -1,4 +1,6 @@
-﻿namespace osu_ui_skinner.FileFormats
+﻿using System.IO;
+
+namespace osu_ui_skinner.FileFormats
 {
     internal abstract class ResourceFileBase
     {
@@ -7,6 +9,6 @@
 
         public virtual string FileName => null;
 
-        public abstract byte[] GetData();
+        public abstract void SaveData(Stream str);
     }
 }

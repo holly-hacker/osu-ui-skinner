@@ -1,4 +1,6 @@
-﻿namespace osu_ui_skinner
+﻿using System.IO;
+
+namespace osu_ui_skinner
 {
     internal static class GeneralHelper
     {
@@ -21,5 +23,7 @@
 
             return false;
         }
+
+        public static void Write(this Stream s, byte[] bytes) => s.Write(bytes, 0, bytes.Length);
     }
 }

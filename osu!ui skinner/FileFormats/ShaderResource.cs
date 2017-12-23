@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Text;
 
 namespace osu_ui_skinner.FileFormats
 {
@@ -22,6 +23,6 @@ namespace osu_ui_skinner.FileFormats
             _text = Encoding.UTF8.GetString(data);
         }
 
-        public override byte[] GetData() => Encoding.UTF8.GetBytes(_text);
+        public override void SaveData(Stream s) => s.Write(Encoding.UTF8.GetBytes(_text));
     }
 }

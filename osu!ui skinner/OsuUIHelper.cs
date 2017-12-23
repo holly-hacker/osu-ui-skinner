@@ -47,7 +47,9 @@ namespace osu_ui_skinner
 
                 string catFolder = Path.Combine(outputDir, b.Category);
                 Directory.CreateDirectory(catFolder);
-                File.WriteAllBytes(Path.Combine(catFolder, (b.FileName ?? element.Name) + b.FileExtension), b.GetData());
+
+                using (FileStream fs = File.OpenWrite(Path.Combine(catFolder, (b.FileName ?? element.Name) + b.FileExtension)))
+                    b.SaveData(fs);
             }
         }
 

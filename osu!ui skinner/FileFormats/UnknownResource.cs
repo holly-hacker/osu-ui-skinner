@@ -1,4 +1,5 @@
-﻿using dnlib.DotNet.Resources;
+﻿using System.IO;
+using dnlib.DotNet.Resources;
 
 namespace osu_ui_skinner.FileFormats
 {
@@ -15,6 +16,6 @@ namespace osu_ui_skinner.FileFormats
             _data = bytes;
         }
 
-        public override byte[] GetData() => _data;
+        public override void SaveData(Stream s) => s.Write(_data);
     }
 }
