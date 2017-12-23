@@ -21,7 +21,7 @@ namespace osu_ui_skinner
 
         public static bool HasPattern(this byte[] bytesSrc, byte[] toFind)
         {
-            for (int i = 0; i < bytesSrc.Length; i++)
+            for (int i = 0; i < bytesSrc.Length - (toFind.Length - 1); i++)
                 if (bytesSrc.MatchBytes(toFind, i))
                     return true;
 
