@@ -53,7 +53,10 @@ namespace osu_ui_skinner
 
         public static void Build(string fullPath, string outputPath)
         {
-            ModuleDefUser mod = new ModuleDefUser("osu!ui.dll") {Kind = ModuleKind.Dll};
+            var mod = new ModuleDefUser("osu!ui.dll", null, ModuleDefMD.Load(typeof(void).Module).Assembly.ToAssemblyRef()) {
+                Kind = ModuleKind.Dll
+            };
+            
             var ass = new AssemblyDefUser("osu!ui", Version.Parse("1.0.0.0"));
             ass.Modules.Add(mod);
 
@@ -78,15 +81,16 @@ namespace osu_ui_skinner
             //reused variables
             CilBody body;
             Instruction instr;
+            var importer = new Importer(mod);
             
-            TypeRef trType = mod.CorLibTypes.GetTypeRef("System", "Type");
-            TypeRef trResourceManager = mod.CorLibTypes.GetTypeRef("System.Resources", "ResourceManager");
+            var trType = importer.Import(typeof(System.Type));
+            var trResourceManager = importer.Import(typeof(System.Resources.ResourceManager));
 
             TypeSig tsType = trType.ToTypeSig();
-            TypeSig tsRuntimeTypeHandle = mod.CorLibTypes.GetTypeRef("System", "RuntimeTypeHandle").ToTypeSig();
-            TypeSig tsAssembly = mod.CorLibTypes.GetTypeRef("System.Reflection", "Assembly").ToTypeSig();
+            TypeSig tsRuntimeTypeHandle = new ValueTypeSig(importer.Import(typeof(System.RuntimeTypeHandle)));
+            TypeSig tsAssembly = importer.ImportAsTypeSig(typeof(System.Reflection.Assembly));
             TypeSig tsResourceManager = trResourceManager.ToTypeSig();
-            TypeSig tsCultureInfo = mod.CorLibTypes.GetTypeRef("System.Globalization", "CultureInfo").ToTypeSig();
+            TypeSig tsCultureInfo = importer.ImportAsTypeSig(typeof(System.Globalization.CultureInfo));
 
             //create fields
             /*
