@@ -1,4 +1,6 @@
-﻿using dnlib.DotNet.Resources;
+﻿using System.Drawing;
+using System.IO;
+using dnlib.DotNet.Resources;
 using osu_ui_skinner.FileFormats.Resources;
 
 namespace osu_ui_skinner.FileFormats.Factories
@@ -11,6 +13,8 @@ namespace osu_ui_skinner.FileFormats.Factories
 
         public override ResourceBase CreateResource(ResourceElement element, byte type) 
             => new BitmapResource(((BinaryResourceData)element.ResourceData).Data);
+
+        public override ResourceBase ReadResource(FileStream fs) => new BitmapResource(new Bitmap(fs));
 
 
         private static bool IsBitmap(ResourceElement obj) => obj.ResourceData is BinaryResourceData br 

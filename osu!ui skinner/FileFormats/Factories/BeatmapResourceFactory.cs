@@ -1,4 +1,5 @@
-﻿using dnlib.DotNet.Resources;
+﻿using System.IO;
+using dnlib.DotNet.Resources;
 using osu_ui_skinner.FileFormats.Resources;
 
 namespace osu_ui_skinner.FileFormats.Factories
@@ -10,5 +11,6 @@ namespace osu_ui_skinner.FileFormats.Factories
         public override byte Detect(ResourceElement element) => element.ResourceData.GetBytes().MatchBytes(new byte[] {0xEC, 0x48, 0x4F}).ToByte();
 
         public override ResourceBase CreateResource(ResourceElement element, byte type) => new Osz2Resource(element.ResourceData.GetBytes());
+        public override ResourceBase ReadResource(FileStream fs) => new Osz2Resource(fs.ReadAllBytes());
     }
 }

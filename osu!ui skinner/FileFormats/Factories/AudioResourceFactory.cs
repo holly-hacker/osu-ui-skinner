@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 using dnlib.DotNet.Resources;
 using osu_ui_skinner.FileFormats.Resources;
@@ -28,6 +29,16 @@ namespace osu_ui_skinner.FileFormats.Factories
                 case TypeWAV: return new WAVResource(bytes);
                 case TypeMP3: return new MP3Resource(bytes);
                 default: throw new ArgumentOutOfRangeException(nameof(type));
+            }
+        }
+
+        public override ResourceBase ReadResource(FileStream fs)
+        {
+            switch (Path.GetExtension(fs.Name).ToLower())
+            {
+                case ".wav": return new WAVResource(fs.ReadAllBytes());
+                case ".mp3": return new MP3Resource(fs.ReadAllBytes());
+                default: throw new Exception("Unexpected file extension for file at " + fs.Name);
             }
         }
 

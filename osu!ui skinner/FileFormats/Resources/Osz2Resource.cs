@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using dnlib.DotNet.Resources;
 
 namespace osu_ui_skinner.FileFormats.Resources
 {
@@ -14,6 +15,7 @@ namespace osu_ui_skinner.FileFormats.Resources
         }
 
         //TODO: parse and extract
-        public override void SaveData(Stream s) => s.Write(_data);
+        public override void Deserialize(Stream s) => s.Write(_data);
+        public override IResourceData Serialize() => new BuiltInResourceData(ResourceTypeCode.ByteArray, _data);
     }
 }

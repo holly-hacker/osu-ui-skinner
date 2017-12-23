@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using dnlib.DotNet.Resources;
+using System.IO;
 
 namespace osu_ui_skinner.FileFormats.Resources
 {
@@ -7,7 +8,9 @@ namespace osu_ui_skinner.FileFormats.Resources
         public abstract string FileExtension { get; }
 
         public virtual string FileName => null;
+        public virtual string ResourceName => null;
         
-        public abstract void SaveData(Stream str);
+        public abstract void Deserialize(Stream s);
+        public abstract IResourceData Serialize();
     }
 }

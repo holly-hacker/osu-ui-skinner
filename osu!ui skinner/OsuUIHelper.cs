@@ -49,7 +49,7 @@ namespace osu_ui_skinner
                 Directory.CreateDirectory(catFolder);
 
                 using (FileStream fs = File.OpenWrite(Path.Combine(catFolder, (b.FileName ?? element.Name) + b.FileExtension)))
-                    b.SaveData(fs);
+                    b.Deserialize(fs);
             }
         }
 
@@ -62,8 +62,16 @@ namespace osu_ui_skinner
             var ass = new AssemblyDefUser("osu!ui", Version.Parse("1.0.0.0"));
             ass.Modules.Add(mod);
 
-            //TODO: add bytes
-            mod.Resources.Add(new EmbeddedResource(Resources, new byte[] {}, ManifestResourceAttributes.Private));
+            //get resourceset
+            var set = new ResourceElementSet();
+            foreach (ResourceElement re in FileFormatHelper.GetResourceElements(fullPath))
+                set.Add(re);
+
+            //write set to byte[] and add to module resources
+            using (var ms = new MemoryStream()) {
+                ResourceWriter.Write(mod, ms, set);
+                mod.Resources.Add(new EmbeddedResource(Resources, ms.ToArray(), ManifestResourceAttributes.Private));
+            }
 
             //create store type
             TypeDef store = new TypeDefUser(Namespace, ResourceStore, mod.CorLibTypes.Object.TypeDefOrRef) {Attributes = TypeAttributes.Public | TypeAttributes.BeforeFieldInit};

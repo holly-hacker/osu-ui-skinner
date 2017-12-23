@@ -1,4 +1,5 @@
-﻿using dnlib.DotNet.Resources;
+﻿using System.IO;
+using dnlib.DotNet.Resources;
 using osu_ui_skinner.FileFormats.Resources;
 
 namespace osu_ui_skinner.FileFormats.Factories
@@ -9,6 +10,7 @@ namespace osu_ui_skinner.FileFormats.Factories
 
         public abstract byte Detect(ResourceElement element);
         public abstract ResourceBase CreateResource(ResourceElement element, byte type);
+        public abstract ResourceBase ReadResource(FileStream fs);
 
         //helper methods
         public bool Detect(ResourceElement obj, out byte type) => (type = Detect(obj)) > 0;

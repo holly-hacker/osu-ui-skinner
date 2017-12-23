@@ -1,4 +1,5 @@
-﻿using dnlib.DotNet.Resources;
+﻿using System.IO;
+using dnlib.DotNet.Resources;
 using osu_ui_skinner.FileFormats.Resources;
 
 namespace osu_ui_skinner.FileFormats.Factories
@@ -9,5 +10,6 @@ namespace osu_ui_skinner.FileFormats.Factories
         public override byte Detect(ResourceElement element) => 1;
 
         public override ResourceBase CreateResource(ResourceElement element, byte type) => new UnknownResource(element.ResourceData.GetBytes());
+        public override ResourceBase ReadResource(FileStream fs) => new UnknownResource(fs.ReadAllBytes());
     }
 }

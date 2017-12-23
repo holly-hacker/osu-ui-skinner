@@ -29,6 +29,15 @@ namespace osu_ui_skinner
         }
 
         public static void Write(this Stream s, byte[] bytes) => s.Write(bytes, 0, bytes.Length);
+
+        public static byte[] ReadAllBytes(this Stream s)
+        {
+            using (var ms = new MemoryStream())
+            {
+                s.CopyTo(ms);
+                return ms.ToArray();
+            }
+        }
         
         public static byte[] GetBytes(this IResourceData obj)
         {

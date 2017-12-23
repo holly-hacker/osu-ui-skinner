@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text;
 using dnlib.DotNet.Resources;
@@ -30,6 +31,16 @@ namespace osu_ui_skinner.FileFormats.Factories
                 case TypeTTF: return new TrueTypeFontResource(bytes);
                 case TypeOTF: return new OpenTypeFontResource(bytes);
                 default: throw new ArgumentOutOfRangeException(nameof(type));
+            }
+        }
+
+        public override ResourceBase ReadResource(FileStream fs)
+        {
+            switch (Path.GetExtension(fs.Name).ToLower())
+            {
+                case ".ttf": return new TrueTypeFontResource(fs.ReadAllBytes());
+                case ".otf": return new OpenTypeFontResource(fs.ReadAllBytes());
+                default: throw new Exception("Unexpected file extension for file at " + fs.Name);
             }
         }
 
