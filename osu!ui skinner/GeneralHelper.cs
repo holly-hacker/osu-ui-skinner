@@ -1,9 +1,13 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using dnlib.DotNet.Resources;
 
 namespace osu_ui_skinner
 {
     internal static class GeneralHelper
     {
+        public static byte ToByte(this bool b) => b ? (byte)1 : (byte)0;
+
         public static bool MatchBytes(this byte[] bytesSrc, byte[] toFind, int offsetSrc = 0)
         {
             if (toFind.Length > bytesSrc.Length - offsetSrc) return false;
@@ -25,5 +29,18 @@ namespace osu_ui_skinner
         }
 
         public static void Write(this Stream s, byte[] bytes) => s.Write(bytes, 0, bytes.Length);
+        
+        public static byte[] GetBytes(this IResourceData obj)
+        {
+            switch (obj)
+            {
+                case BuiltInResourceData d1:
+                    return d1.Data as byte[] ?? throw new Exception("BuildInResourceData's data is not a byte[]");
+                case BinaryResourceData d2:
+                    return d2.Data;
+                default:
+                    throw new Exception("Unexpected type: " + obj.GetType());
+            }
+        }
     }
 }

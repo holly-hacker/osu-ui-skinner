@@ -1,58 +1,27 @@
-﻿using System;
-using dnlib.DotNet.Resources;
-using osu_ui_skinner.FileFormats;
+﻿using dnlib.DotNet.Resources;
+using osu_ui_skinner.FileFormats.Factories;
+using osu_ui_skinner.FileFormats.Resources;
 
 namespace osu_ui_skinner
 {
     internal static class FileFormatHelper
     {
-        public static ResourceFileBase ToFileFormat(ResourceElement obj)
+        private static readonly FactoryBase[] Factories = {
+            new ImageResourceFactory(),
+            new ShaderResourceFactory(),
+            new FontResourceFactory(),
+            new BeatmapResourceFactory(),
+            new AudioResourceFactory()
+        };
+        private static readonly FactoryBase DefaultFactory = new UnknownResourceFactory();
+
+        public static ResourceBase ToFileFormat(ResourceElement obj, out string s)
         {
-            if (obj.ResourceData is BinaryResourceData br) {
-                //we can cast this, probably
-                if (br.TypeName.StartsWith("System.Drawing.Bitmap"))
-                    return new BitmapResource(br.Data);
-                else {
-                    Logger.Warn("Unexpected BinaryResourceData");
-                    return new UnknownResource(obj.ResourceData);
-                }
-            }
-            else if (obj.ResourceData is BuiltInResourceData bi) {
-                if (bi.Data is byte[] bytes)
-                {
-                    if (obj.Name.StartsWith("sh_"))
-                        return new ShaderResource(obj.Name, bytes);
-                    if (Osz2Resource.Detect(ref bytes))
-                        return new Osz2Resource(bytes);
-
-                    //fonts
-                    if (OpenTypeFontResource.Detect(ref bytes))
-                        return new OpenTypeFontResource(bytes);
-                    if (TrueTypeFontResource.Detect(ref bytes))
-                        return new TrueTypeFontResource(bytes);
-
-                    //audio files
-                    if (WAVResource.Detect(ref bytes))
-                        return new WAVResource(bytes);
-                    if (MP3Resource.Detect(ref bytes))  //this one last, because it is possibly triggerhappy (start with FFFx/FFEx)
-                        return new MP3Resource(bytes);
-                }
-            }
+            foreach (FactoryBase factory in Factories)
+                if (factory.Detect(obj, out byte type))
+                    return factory.CreateResource(obj, type, out s);
             
-            return new UnknownResource(obj.ResourceData);
-        }
-
-        public static byte[] GetDataBytes(this IResourceData obj)
-        {
-            switch (obj)
-            {
-                case BuiltInResourceData d1:
-                    return d1.Data as byte[] ?? throw new Exception("BuildInResourceData's data is not a byte[]");
-                case BinaryResourceData d2:
-                    return d2.Data;
-                default:
-                    throw new Exception("Unexpected type: " + obj.GetType());
-            }
+            return DefaultFactory.CreateResource(obj, 0, out s);
         }
     }
 }

@@ -1,10 +1,9 @@
 ﻿using System.IO;
 
-namespace osu_ui_skinner.FileFormats
+namespace osu_ui_skinner.FileFormats.Resources
 {
-    internal class Osz2Resource : ResourceFileBase
+    internal class Osz2Resource : ResourceBase
     {
-        public override string Category => "Beatmaps";
         public override string FileExtension => ".osz2";
 
         private readonly byte[] _data;
@@ -16,7 +15,5 @@ namespace osu_ui_skinner.FileFormats
 
         //TODO: parse and extract
         public override void SaveData(Stream s) => s.Write(_data);
-
-        public static bool Detect(ref byte[] bytes) => bytes.MatchBytes(new byte[] {0xEC, 0x48, 0x4F});
     }
 }

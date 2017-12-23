@@ -1,12 +1,10 @@
 ﻿using System.IO;
 using System.Text;
 
-namespace osu_ui_skinner.FileFormats
+namespace osu_ui_skinner.FileFormats.Resources
 {
-    internal class ShaderResource : ResourceFileBase
+    internal class ShaderResource : ResourceBase
     {
-        public override string Category => "Shaders";
-
         public override string FileExtension { get; } = ".glsl";
         public override string FileName { get; }
 

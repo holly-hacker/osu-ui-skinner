@@ -4,7 +4,7 @@ using System.IO;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using dnlib.DotNet.Resources;
-using osu_ui_skinner.FileFormats;
+using osu_ui_skinner.FileFormats.Resources;
 
 namespace osu_ui_skinner
 {
@@ -38,14 +38,14 @@ namespace osu_ui_skinner
                 Logger.Debug(element.ToString());
 
                 //save
-                ResourceFileBase b = FileFormatHelper.ToFileFormat(element);
+                ResourceBase b = FileFormatHelper.ToFileFormat(element, out string category);
 
                 if (b.GetType() == typeof(UnknownResource))
                     Logger.Warn("Unknown resource detected: " + element.Name);
                 else
                     Logger.Debug("\tCreated " + b.GetType().Name);
 
-                string catFolder = Path.Combine(outputDir, b.Category);
+                string catFolder = Path.Combine(outputDir, category);
                 Directory.CreateDirectory(catFolder);
 
                 using (FileStream fs = File.OpenWrite(Path.Combine(catFolder, (b.FileName ?? element.Name) + b.FileExtension)))

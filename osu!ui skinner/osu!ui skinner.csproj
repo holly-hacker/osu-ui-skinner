@@ -48,15 +48,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileFormatHelper.cs" />
-    <Compile Include="FileFormats\BitmapResource.cs" />
-    <Compile Include="FileFormats\MP3Resource.cs" />
-    <Compile Include="FileFormats\OpenTypeFontResource.cs" />
-    <Compile Include="FileFormats\Osz2Resource.cs" />
-    <Compile Include="FileFormats\ShaderResource.cs" />
-    <Compile Include="FileFormats\TrueTypeFontResource.cs" />
-    <Compile Include="FileFormats\ResourceFileBase.cs" />
-    <Compile Include="FileFormats\UnknownResource.cs" />
-    <Compile Include="FileFormats\WAVResource.cs" />
+    <Compile Include="FileFormats\Factories\AudioResourceFactory.cs" />
+    <Compile Include="FileFormats\Factories\BeatmapResourceFactory.cs" />
+    <Compile Include="FileFormats\Factories\FontResourceFactory.cs" />
+    <Compile Include="FileFormats\Factories\ShaderResourceFactory.cs" />
+    <Compile Include="FileFormats\Resources\BitmapResource.cs" />
+    <Compile Include="FileFormats\Factories\FactoryBase.cs" />
+    <Compile Include="FileFormats\Factories\ImageResourceFactory.cs" />
+    <Compile Include="FileFormats\Factories\UnknownResourceFactory.cs" />
+    <Compile Include="FileFormats\Resources\MP3Resource.cs" />
+    <Compile Include="FileFormats\Resources\OpenTypeFontResource.cs" />
+    <Compile Include="FileFormats\Resources\Osz2Resource.cs" />
+    <Compile Include="FileFormats\Resources\ShaderResource.cs" />
+    <Compile Include="FileFormats\Resources\TrueTypeFontResource.cs" />
+    <Compile Include="FileFormats\Resources\ResourceBase.cs" />
+    <Compile Include="FileFormats\Resources\UnknownResource.cs" />
+    <Compile Include="FileFormats\Resources\WAVResource.cs" />
     <Compile Include="GeneralHelper.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="OsuUIHelper.cs" />
