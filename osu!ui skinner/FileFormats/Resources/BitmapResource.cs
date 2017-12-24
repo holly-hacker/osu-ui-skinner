@@ -27,13 +27,13 @@ namespace osu_ui_skinner.FileFormats.Resources
         public override IResourceData Serialize()
         {
             byte[] bytes;
+
             using (var ms = new MemoryStream())
             {
                 new BinaryFormatter().Serialize(ms, _bmp);
                 bytes = ms.ToArray();
             }
-
-
+            
             return new BinaryResourceData(new UserResourceType(typeof(Bitmap).AssemblyQualifiedName, ResourceTypeCode.UserTypes), bytes);
         }
     }

@@ -17,8 +17,8 @@ namespace osu_ui_skinner.FileFormats.Resources
         {
             string[] splitted = (ResourceName = e.Name).Split('_');
 
-            FileExtension = "." + splitted[2];
             FileName = splitted[1];
+            FileExtension = "." + splitted[2];
 
             _text = Encoding.UTF8.GetString(e.ResourceData.GetBytes());
         }

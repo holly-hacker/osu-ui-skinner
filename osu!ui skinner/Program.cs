@@ -22,11 +22,7 @@ namespace osu_ui_skinner
 
             try {
                 if (Directory.Exists(path))
-#if DEBUG
                     OsuUIHelper.Build(path, Environment.CurrentDirectory);
-#else
-                    throw new NotImplementedException("Re-compiling osuui.dll is not yet implemented.");
-#endif
                 else if (File.Exists(path))
                     OsuUIHelper.Extract(path, OutputDir);
                 else
