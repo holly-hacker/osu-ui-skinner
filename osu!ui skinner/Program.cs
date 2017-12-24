@@ -5,8 +5,6 @@ namespace osu_ui_skinner
 {
     internal class Program
     {
-        private const string OutputDir = "extracted";
-
         private static void Main(string[] args)
         {
             PrintHeader();
@@ -24,7 +22,7 @@ namespace osu_ui_skinner
                 if (Directory.Exists(path))
                     OsuUIHelper.Build(path, Environment.CurrentDirectory);
                 else if (File.Exists(path))
-                    OsuUIHelper.Extract(path, OutputDir);
+                    OsuUIHelper.Extract(path);
                 else
                     Console.WriteLine("Please pass me an existing file or directory as parameter.");
             } catch (Exception e) {

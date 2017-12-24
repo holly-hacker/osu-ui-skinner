@@ -43,6 +43,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="FileFormatHelper.cs" />
     <Compile Include="FileFormats\Factories\AudioResourceFactory.cs" />
     <Compile Include="FileFormats\Factories\BeatmapResourceFactory.cs" />

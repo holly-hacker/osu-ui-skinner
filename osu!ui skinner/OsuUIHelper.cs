@@ -5,20 +5,18 @@ using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using dnlib.DotNet.Resources;
 using osu_ui_skinner.FileFormats.Resources;
+using static osu_ui_skinner.Constants;
 
 namespace osu_ui_skinner
 {
     internal static class OsuUIHelper
     {
-        private const string Namespace = "osu_ui";
-        private const string ResourceStore = "ResourcesStore";
-        private const string ResourceStoreFull = Namespace + "." + ResourceStore;
-        private const string Resources = ResourceStoreFull + ".resources";
-
-        public static void Extract(string fullPath, string outputDir)
+        public static void Extract(string fullPath)
         {
-            Logger.Info($"Creating output directory {outputDir}...");
-            Directory.CreateDirectory(outputDir);
+            Logger.Info($"Creating output directories in '{OutputDir}'...");
+            Directory.CreateDirectory(OutputDir);
+            Directory.CreateDirectory(Path.Combine(OutputDir, OutputDirOriginal));
+            Directory.CreateDirectory(Path.Combine(OutputDir, OutputDirEdit));
 
             Logger.Info("Loading module...");
             var mod = ModuleDefMD.Load(fullPath);
@@ -45,7 +43,7 @@ namespace osu_ui_skinner
                 else
                     Logger.Debug("\tCreated " + b.GetType().Name);
 
-                string catFolder = Path.Combine(outputDir, category);
+                string catFolder = Path.Combine(OutputDir, OutputDirOriginal, category);
                 Directory.CreateDirectory(catFolder);
 
                 using (FileStream fs = File.OpenWrite(Path.Combine(catFolder, (b.FileName ?? element.Name) + b.FileExtension)))
@@ -55,11 +53,11 @@ namespace osu_ui_skinner
 
         public static void Build(string fullPath, string outputPath)
         {
-            var mod = new ModuleDefUser("osu!ui.dll", null, ModuleDefMD.Load(typeof(void).Module).Assembly.ToAssemblyRef()) {
+            var mod = new ModuleDefUser(ModuleName, null, ModuleDefMD.Load(typeof(void).Module).Assembly.ToAssemblyRef()) {
                 Kind = ModuleKind.Dll
             };
             
-            var ass = new AssemblyDefUser("osu!ui", Version.Parse("1.0.0.0"));
+            var ass = new AssemblyDefUser(AssemblyName, Version.Parse("1.0.0.0"));
             ass.Modules.Add(mod);
 
             //get resourceset
